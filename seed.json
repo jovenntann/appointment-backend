@@ -25,7 +25,75 @@
             "profile_pic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjoxagWnBzGTwJCLM5Nrs_j6WywlZjPKouDIEEDtk7WZgke9HJdIPYXON0pacdSUGY3co&usqp=CAU",
             "user_type_id": 2,
             "status_id": 1
+        },
+        {
+            "email":"jannelsamson@gmail.com",
+            "password": "pass12345",
+            "first_name": "Jannel",
+            "last_name": "Samson",
+            "profile_pic": "https://demo.cherrytheme.com/gems/wp-content/uploads/2018/11/our-team-04.jpg",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"krizyoung@gmail.com",
+            "password": "pass12345",
+            "first_name": "Kriz",
+            "last_name": "Young",
+            "profile_pic": "https://go.vcuhealth.org/media/PhysicianPhotos/Sullivan_3864.jpg",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"joshuapaul@gmail.com",
+            "password": "pass12345",
+            "first_name": "Joshua",
+            "last_name": "Paul",
+            "profile_pic": "https://www.symbiosis.ae/images/doctors/Dr_Ateeque.png",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"khairidzuwan@gmail.com",
+            "password": "pass12345",
+            "first_name": "Khai",
+            "last_name": "Ridzuwan",
+            "profile_pic": "https://symbiosis.ae/images/doctors/Dr_Sheirf1.png",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"angelosulit@gmail.com",
+            "password": "pass12345",
+            "first_name": "Angelo",
+            "last_name": "Sulit",
+            "profile_pic": "https://lh3.googleusercontent.com/proxy/86wnsRtptY_wHdtAoMBz951Ew55jRTdihAum81e81jX9ZC6vAAX2RctiOs9UBTc3GunFq4NLFJRn1H6Jn24n-AmNIBbj1qb3W7h9NKyfx9-bmtP8uwBOum2NETSHlLD13Q",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"juandelacruz@gmail.com",
+            "password": "pass12345",
+            "first_name": "Juan",
+            "last_name": "Dela Cruz",
+            "profile_pic": "https://medisensecrm.com/Doc/3620/51ee7c2d-e098-4acb-9fba-9ecadf702f1e.jpg",
+            "user_type_id": 2,
+            "status_id": 1
+        },
+        {
+            "email":"davidtan@gmail.com",
+            "password": "pass12345",
+            "first_name": "David",
+            "last_name": "Tan",
+            "profile_pic": "https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=",
+            "user_type_id": 2,
+            "status_id": 1
         }
+    ],
+    "appointment_status": [
+        "pending",
+        "declined",
+        "approved"
     ],
     "appointments": [
         {

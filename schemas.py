@@ -80,6 +80,7 @@ class UserCreate(UserBase):
 class User(UserBase):
 
     id: int
+    email: str
     first_name: str
     last_name: str
     profile_pic: str
@@ -94,6 +95,25 @@ class User(UserBase):
 
 
 
+
+
+# Appointment Status Schemas
+
+class AppointmentStatusBase(BaseModel):
+
+    pass
+
+class AppointmentStatusCreate(AppointmentStatusBase):
+
+    name: str
+
+class AppointmentStatus(AppointmentStatusBase):
+    
+    id: int
+    name: str
+    
+    class Config:
+        orm_mode = True
 
 
 # Appointment Schemas

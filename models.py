@@ -51,6 +51,13 @@ class Appointment(Base):
     comments = Column(String)
     created_at = Column(DateTime(timezone=True), default=func.now())
 
+class AppointmentStatus(Base):
+
+    __tablename__ = "appointment_status"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+
 class Item(Base):
 
     __tablename__ = "items"

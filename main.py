@@ -1,27 +1,25 @@
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-# https://github.com/PrettyPrinted/youtube_video_code/blob/master/2021/01/05/FastAPI%20Authentication%20Example%20With%20OAuth2%20and%20Tortoise%20ORM/fastapiauth/main.py
+
+# Authentication
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import jwt
 import json
 
+# Database
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
 import crud, models, schemas
-
 from seeder import seed
 
 models.Base.metadata.create_all(bind=engine)
 
+# Initialize
 app = FastAPI()
 
-# Cors
-
-origins = [
-    "http://localhost:8080",
-]
-
+# Cors WhiteList
+origins = ["http://localhost:8080",]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -30,21 +28,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Dependency
-
-def get_db():
-    
+def get_db():    
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-# Seeder Optional
+# =====================================================================================================================
+# Seeder: (Optional)
+# =====================================================================================================================
 
 seed(SessionLocal())
 
+# =====================================================================================================================
 # Authentication
+# =====================================================================================================================
 
 JWT_SECRET = 'supersecretjwt'
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -88,7 +87,9 @@ def get_current_user(token: str = Depends(oauth2_scheme),db: Session = Depends(g
     return db_user
 
 
-
+# =====================================================================================================================
+# Administration
+# =====================================================================================================================
 
 # Status
 
@@ -146,6 +147,23 @@ def read_user(user_id: int, db: Session = Depends(get_db), currentUser: object =
 def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
     return crud.create_user_item(db=db, item=item, user_id=user_id)
 
+# =====================================================================================================================
+# Scheduler API
+# =====================================================================================================================
+
+# Doctors
+
+@app.get("/doctors/", response_model=List[schemas.User])
+def get_doctors(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    users = crud.get_users_by_user_type(db)
+    return users
+
+# Appointment Status
+
+@app.get("/appointment/status/", response_model=List[schemas.AppointmentStatus])
+def read_appointment_status(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment_status = crud.get_appointment_status(db)
+    return appointment_status
 
 # Appointments
 
@@ -158,8 +176,12 @@ def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get
     appointments = crud.get_appointments(db, skip=skip, limit=limit)
     return appointments
 
-# Items
 
+# =====================================================================================================================
+# References API
+# =====================================================================================================================
+
+# Items
 @app.get("/items/", response_model=List[schemas.Item])
 def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
     items = crud.get_items(db, skip=skip, limit=limit)

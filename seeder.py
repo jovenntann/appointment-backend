@@ -36,6 +36,13 @@ def seed(db):
     db.commit()
     print("Seeding: Users Completed")
 
+    print("Seeding: Appointment Status..")
+    for data in jsonData['appointment_status']:
+        db_object = models.AppointmentStatus(name=data)
+        db.add(db_object)
+    db.commit()
+    print("Seeding: Appointment Status Completed")
+
     print("Seeding: Appointments..")
     for appointment in jsonData['appointments']:
         db_object = models.Appointment(
@@ -50,6 +57,6 @@ def seed(db):
     db.commit()
     print("Seeding: Appointments Completed")
 
-    # db.refresh(db_object)
+    db.refresh(db_object)
 
     return db_object

@@ -62,6 +62,10 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
     return db.query(models.User).offset(skip).limit(limit).all()
 
+def get_users_by_user_type(db: Session):
+
+    return db.query(models.User).filter(models.User.user_type_id == 2).all()
+
 def create_user(db: Session, user: schemas.UserCreate):
     
     db_user = models.User(email=user.email, password=user.password, first_name=user.first_name, last_name=user.last_name, profile_pic=user.profile_pic, user_type_id=user.user_type_id, status_id=user.status_id)
@@ -71,6 +75,11 @@ def create_user(db: Session, user: schemas.UserCreate):
 
     return db_user
 
+# CRUD: Appointment Status
+
+def get_appointment_status(db: Session):
+
+    return db.query(models.AppointmentStatus).all()
 
 # CRUD: Appointments
 
