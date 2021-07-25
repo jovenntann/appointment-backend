@@ -25,7 +25,7 @@ uvicorn main:app --reload
 
 Scheduler:
 
-email: jovenntann@gmail.com  
+email: clairerivera@gmail.com  
 password: pass12345
 
 Doctor

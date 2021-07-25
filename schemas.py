@@ -6,7 +6,7 @@ import datetime
 
 class StatusBase(BaseModel):
 
-    name: str
+    pass
 
 class StatusCreate(StatusBase):
 
@@ -25,7 +25,7 @@ class Status(StatusBase):
 
 class UserTypeBase(BaseModel):
 
-    title: str
+    pass
 
 class UserTypeCreate(UserTypeBase):
 
@@ -46,12 +46,12 @@ class UserType(UserTypeBase):
 
 class ItemBase(BaseModel):
 
-    title: str
-    description: Optional[str] = None
+    pass
 
 class ItemCreate(ItemBase):
 
-    pass
+    title: str
+    description: Optional[str] = None
 
 class Item(ItemBase):
     id: int
@@ -61,22 +61,28 @@ class Item(ItemBase):
         orm_mode = True
 
 
-
 # User Schemas
 
 class UserBase(BaseModel):
 
-    email: str
+    pass
 
 class UserCreate(UserBase):
 
+    email: str
     password: str
+    first_name: str
+    last_name: str
+    profile_pic: str
     user_type_id: int
     status_id: int
 
 class User(UserBase):
 
     id: int
+    first_name: str
+    last_name: str
+    profile_pic: str
     is_active: bool
     items: List[Item] = []
     user_type_id: int
@@ -94,11 +100,12 @@ class User(UserBase):
 
 class AppointmentBase(BaseModel):
 
-    patient_name: str
+    pass
 
 class AppointmentCreate(AppointmentBase):
 
-    patient_name: str
+    patient_first_name: str
+    patient_last_name: str
     scheduled_from: datetime.datetime
     scheduled_to: datetime.datetime
     user_id: int
@@ -107,7 +114,8 @@ class AppointmentCreate(AppointmentBase):
 class Appointment(AppointmentBase):
 
     id: int
-    patient_name: str
+    patient_first_name: str
+    patient_last_name: str
     scheduled_from: datetime.datetime
     scheduled_to: datetime.datetime
     user_id: int

@@ -23,7 +23,15 @@ def seed(db):
 
     print("Seeding: Users..")
     for user in jsonData['users']:
-        db_object = models.User(email=user['email'], password=user['password'], user_type_id=user['user_type_id'], status_id=user['status_id'])
+        db_object = models.User(
+            email=user['email'], 
+            password=user['password'], 
+            first_name=user['first_name'], 
+            last_name=user['last_name'],
+            profile_pic=user['profile_pic'],
+            user_type_id=user['user_type_id'], 
+            status_id=user['status_id']
+        )
         db.add(db_object)
     db.commit()
     print("Seeding: Users Completed")
@@ -31,7 +39,8 @@ def seed(db):
     print("Seeding: Appointments..")
     for appointment in jsonData['appointments']:
         db_object = models.Appointment(
-            patient_name=appointment['patient_name'],
+            patient_first_name=appointment['patient_first_name'],
+            patient_last_name=appointment['patient_last_name'],
             scheduled_from=func.now(),
             scheduled_to=func.now(),
             user_id=appointment['user_id'],

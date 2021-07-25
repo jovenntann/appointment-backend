@@ -64,8 +64,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 def create_user(db: Session, user: schemas.UserCreate):
     
-    fake_password = user.password + "notreallyhashed"
-    db_user = models.User(email=user.email, password=fake_password, user_type_id=user.user_type_id, status_id=user.status_id)
+    db_user = models.User(email=user.email, password=user.password, first_name=user.first_name, last_name=user.last_name, profile_pic=user.profile_pic, user_type_id=user.user_type_id, status_id=user.status_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -73,13 +72,13 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-
 # CRUD: Appointments
 
 def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     
     db_appointment = models.Appointment(
-        patient_name=appointment.patient_name,
+        patient_first_name=appointment.patient_first_name,
+        patient_last_name=appointment.patient_last_name,
         scheduled_from=appointment.scheduled_from,
         scheduled_to=appointment.scheduled_to,
         user_id=appointment.user_id,
