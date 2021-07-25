@@ -1,0 +1,40 @@
+{
+    "status": [
+        "Available",
+        "Unavailable"
+    ],
+    "user_type": [
+        "Scheduler",
+        "Doctor"
+    ],
+    "users": [
+        {
+            "email":"jovenntann@gmail.com",
+            "password": "pass12345",
+            "user_type_id": 1,
+            "status_id": 1
+        },
+        {
+            "email":"mikechua@gmail.com",
+            "password": "pass12345",
+            "user_type_id": 2,
+            "status_id": 1
+        }
+    ],
+    "appointments": [
+        {
+            "patient_name": "John Dingdong",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": 1,
+            "comments": "Not Feeling well"
+        },
+        {
+            "patient_name": "Marian Rivera",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": 1,
+            "comments": "Sick and tired"
+        }
+    ]
+  }
