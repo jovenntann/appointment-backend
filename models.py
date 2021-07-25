@@ -36,6 +36,8 @@ class User(Base):
     status_id = Column(Integer, ForeignKey("status.id"))
     # User has many items
     items = relationship("Item", back_populates="owner")
+    # User has many appointments
+    appointments = relationship("Appointment", back_populates="user")
     
 class Appointment(Base):
 
@@ -48,8 +50,12 @@ class Appointment(Base):
     scheduled_from = Column(DateTime)
     scheduled_to = Column(DateTime)
     user_id = Column(Integer, ForeignKey("users.id"))
+    appointment_status_id = Column(Integer, ForeignKey("appointment_status.id"))
     comments = Column(String)
     created_at = Column(DateTime(timezone=True), default=func.now())
+    
+    # Link Back to User
+    user = relationship("User", back_populates="appointments")
 
 class AppointmentStatus(Base):
 

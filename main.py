@@ -18,7 +18,7 @@ models.Base.metadata.create_all(bind=engine)
 # Initialize
 app = FastAPI()
 
-# Cors WhiteList
+# CORS: WhiteList
 origins = ["http://localhost:8080",]
 app.add_middleware(
     CORSMiddleware,
@@ -178,7 +178,7 @@ def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get
 
 
 # =====================================================================================================================
-# References API
+# REFERENCES API
 # =====================================================================================================================
 
 # Items

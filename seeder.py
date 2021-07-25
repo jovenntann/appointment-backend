@@ -51,6 +51,7 @@ def seed(db):
             scheduled_from=func.now(),
             scheduled_to=func.now(),
             user_id=appointment['user_id'],
+            appointment_status_id=1,
             comments=appointment['comments']
         )
         db.add(db_object)

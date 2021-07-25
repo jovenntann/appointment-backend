@@ -2,7 +2,9 @@ from typing import List, Optional
 from pydantic import BaseModel
 import datetime
 
-# Status Schemas
+# ====================================================================================================
+# STATUS SCHEMA: User Statuses | Available, Unavailable
+# ====================================================================================================
 
 class StatusBase(BaseModel):
 
@@ -20,8 +22,9 @@ class Status(StatusBase):
     class Config:
         orm_mode = True
 
-
-# User Type Schemas
+# ====================================================================================================
+# USER TYPE SCHEMA: User Type: Scheduler, Doctor
+# ====================================================================================================
 
 class UserTypeBase(BaseModel):
 
@@ -39,10 +42,9 @@ class UserType(UserTypeBase):
     class Config:
         orm_mode = True
 
-
-
-
-# Item Schemas
+# ====================================================================================================
+# ITEMM SCHEMA: User Items
+# ====================================================================================================
 
 class ItemBase(BaseModel):
 
@@ -60,8 +62,61 @@ class Item(ItemBase):
     class Config:
         orm_mode = True
 
+# ====================================================================================================
+# APPOINTMENT STATUS SCHEMA: Pending, Accepted, Rejected
+# ====================================================================================================
 
-# User Schemas
+class AppointmentStatusBase(BaseModel):
+
+    pass
+
+class AppointmentStatusCreate(AppointmentStatusBase):
+
+    name: str
+
+class AppointmentStatus(AppointmentStatusBase):
+    
+    id: int
+    name: str
+    
+    class Config:
+        orm_mode = True
+
+# ====================================================================================================
+# APPOINTMENT SCHEMA: User = Doctor Appointments
+# ====================================================================================================
+
+class AppointmentBase(BaseModel):
+
+    pass
+
+class AppointmentCreate(AppointmentBase):
+
+    patient_first_name: str
+    patient_last_name: str
+    scheduled_from: datetime.datetime
+    scheduled_to: datetime.datetime
+    user_id: int
+    comments: str
+
+class Appointment(AppointmentBase):
+
+    id: int
+    patient_first_name: str
+    patient_last_name: str
+    scheduled_from: datetime.datetime
+    scheduled_to: datetime.datetime
+    user_id: int
+    appointment_status_id: int
+    comments: str
+    created_at: datetime.datetime
+
+    class Config:
+        orm_mode = True
+
+# ====================================================================================================
+# USER SCHEMA: Users | All Users 
+# ====================================================================================================
 
 class UserBase(BaseModel):
 
@@ -88,68 +143,8 @@ class User(UserBase):
     items: List[Item] = []
     user_type_id: int
     status_id: int
+    appointments: List[Appointment] = []
 
     class Config:
         orm_mode = True
-
-
-
-
-
-
-# Appointment Status Schemas
-
-class AppointmentStatusBase(BaseModel):
-
-    pass
-
-class AppointmentStatusCreate(AppointmentStatusBase):
-
-    name: str
-
-class AppointmentStatus(AppointmentStatusBase):
-    
-    id: int
-    name: str
-    
-    class Config:
-        orm_mode = True
-
-
-# Appointment Schemas
-
-class AppointmentBase(BaseModel):
-
-    pass
-
-class AppointmentCreate(AppointmentBase):
-
-    patient_first_name: str
-    patient_last_name: str
-    scheduled_from: datetime.datetime
-    scheduled_to: datetime.datetime
-    user_id: int
-    comments: str
-
-class Appointment(AppointmentBase):
-
-    id: int
-    patient_first_name: str
-    patient_last_name: str
-    scheduled_from: datetime.datetime
-    scheduled_to: datetime.datetime
-    user_id: int
-    comments: str
-    created_at: datetime.datetime
-
-    class Config:
-        orm_mode = True
-
-# https://pydantic-docs.helpmanual.io/usage/types/
-# Date Time Format: 2020-04-02 14:30:21
-
-
-
-
-
 
