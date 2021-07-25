@@ -3,9 +3,9 @@ import models, schemas
 
 # CRUD: Authentication
 
-def authenticate_user(db: Session,email: str, hashed_password: str):
+def authenticate_user(db: Session,email: str, password: str):
 
-    return db.query(models.User).filter(models.User.email == email, models.User.hashed_password == hashed_password).first()
+    return db.query(models.User).filter(models.User.email == email, models.User.password == password).first()
 
 # CRUD: Status
 
@@ -64,8 +64,8 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 def create_user(db: Session, user: schemas.UserCreate):
     
-    fake_hashed_password = user.password + "notreallyhashed"
-    db_user = models.User(email=user.email, hashed_password=fake_hashed_password, user_type_id=user.user_type_id, status_id=user.status_id)
+    fake_password = user.password + "notreallyhashed"
+    db_user = models.User(email=user.email, password=fake_password, user_type_id=user.user_type_id, status_id=user.status_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
