@@ -26,11 +26,11 @@ uvicorn main:app --reload
 
 Scheduler:
 
-email: jovenntann@gmail.com
+email: jovenntann@gmail.com  
 password: pass12345
 
 Doctor
 
-email: mikechua@gmail.com
+email: mikechua@gmail.com  
 password: pass12345
 
