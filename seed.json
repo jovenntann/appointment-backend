@@ -91,9 +91,9 @@
         }
     ],
     "appointment_status": [
-        "pending",
-        "declined",
-        "approved"
+        "Pending",
+        "Declined",
+        "Approved"
     ],
     "appointments": [
         {
@@ -101,7 +101,7 @@
             "patient_last_name": "Dantes",
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
-            "user_id": 1,
+            "user_id": 2,
             "comments": "Not Feeling well"
         },
         {
@@ -109,8 +109,16 @@
             "patient_last_name": "Rivera",
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
-            "user_id": 1,
+            "user_id": 2,
             "comments": "Sick and tired"
+        },
+        {
+            "patient_first_name": "Princess",
+            "patient_last_name": "Tan",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": null,
+            "comments": "Coughing"
         }
     ]
   }

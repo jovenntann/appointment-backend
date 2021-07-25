@@ -46,16 +46,18 @@ class Appointment(Base):
     id = Column(Integer, primary_key=True, index=True)
     patient_first_name = Column(String)
     patient_last_name = Column(String)
-    profile_pic = Column(String)
     scheduled_from = Column(DateTime)
     scheduled_to = Column(DateTime)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    appointment_status_id = Column(Integer, ForeignKey("appointment_status.id"))
     comments = Column(String)
     created_at = Column(DateTime(timezone=True), default=func.now())
     
-    # Link Back to User
+    # Link to User
+    user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="appointments")
+
+    # Link to Appointment Status
+    appointment_status_id = Column(Integer, ForeignKey("appointment_status.id"))
+    appointment_status = relationship("AppointmentStatus", back_populates="appointments")
 
 class AppointmentStatus(Base):
 
@@ -63,6 +65,8 @@ class AppointmentStatus(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+
+    appointments = relationship("Appointment", back_populates="appointment_status")
 
 class Item(Base):
 

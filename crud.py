@@ -1,4 +1,6 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import defer
+from sqlalchemy.orm import undefer
 import models, schemas
 
 # CRUD: Authentication
@@ -100,10 +102,19 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
 
     return db_appointment
 
-def get_appointments(db: Session, skip: int = 0, limit: int = 100):
-
-    return db.query(models.Appointment).offset(skip).limit(limit).all()
-
+def get_appointments(db: Session):
+    # Custom Format Query Result
+    queryResult = db.query(models.Appointment,models.AppointmentStatus).join(models.AppointmentStatus).all()
+    formattedDict = []
+    for i in queryResult:
+        if (i.Appointment.user_id):
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            # Get User Info # Remove Password column
+            userQueryResult = db.query(models.User).options(defer('password')).filter(models.User.id == i.Appointment.user_id).first()
+            user = userQueryResult.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus,"user":user})
+    return formattedDict
 
 # CRUD: Items
 

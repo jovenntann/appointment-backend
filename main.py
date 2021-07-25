@@ -171,11 +171,10 @@ def read_appointment_status(db: Session = Depends(get_db), currentUser: object =
 def create_appointment(appointment: schemas.AppointmentCreate, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
     return crud.create_appointment(db=db, appointment=appointment)
 
-@app.get("/appointments/", response_model=List[schemas.Appointment])
-def read_appointments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
-    appointments = crud.get_appointments(db, skip=skip, limit=limit)
+@app.get("/appointments/")
+def read_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointments = crud.get_appointments(db)
     return appointments
-
 
 # =====================================================================================================================
 # REFERENCES API
