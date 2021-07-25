@@ -4,10 +4,9 @@ conda create --name backendenv python=3.8
 conda activate backendenv
 ```
 
-### Install Fast API
+### Install Requirements
 ```
-pip install fastapi
-pip install uvicorn
+pip install -r requirements.txt
 ```
 
 ###  API Docs
