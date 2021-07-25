@@ -1,6 +1,12 @@
 from sqlalchemy.orm import Session
 import models, schemas
 
+# CRUD: Authentication
+
+def authenticate_user(db: Session,email: str, hashed_password: str):
+
+    return db.query(models.User).filter(models.User.email == email, models.User.hashed_password == hashed_password).first()
+
 # CRUD: Status
 
 def get_status_by_name(db: Session, name: str):
@@ -21,21 +27,7 @@ def get_status(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Status).offset(skip).limit(limit).all()
 
 
-
-# CRUD: User Type
-
-
-# async def authenticate_user(email: str, password: str):
-#     db_user = await crud.authenticate_user(db, email=email, password=password)
-#     if not user:
-#         return False 
-#     if not user.verify_password(password):
-#         return False
-#     return db_user
-
-def authenticate_user(db: Session,email: str, hashed_password: str):
-
-    return db.query(models.User).filter(models.User.email == email, models.User.hashed_password == hashed_password).first()
+# CRUD User Type
 
 def get_user_type_by_title(db: Session, title: str):
 
