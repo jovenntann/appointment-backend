@@ -114,6 +114,11 @@ def get_appointments(db: Session):
             userQueryResult = db.query(models.User).options(defer('password')).filter(models.User.id == i.Appointment.user_id).first()
             user = userQueryResult.__dict__
             formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus,"user":user})
+        else:
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus})
+
     return formattedDict
 
 # CRUD: Items

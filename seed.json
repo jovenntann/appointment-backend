@@ -102,6 +102,7 @@
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
             "user_id": 2,
+            "appointment_status_id": 3,
             "comments": "Not Feeling well"
         },
         {
@@ -110,6 +111,7 @@
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
             "user_id": 2,
+            "appointment_status_id": 2,
             "comments": "Sick and tired"
         },
         {
@@ -118,6 +120,7 @@
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
             "user_id": null,
+            "appointment_status_id": 1,
             "comments": "Coughing"
         }
     ]
