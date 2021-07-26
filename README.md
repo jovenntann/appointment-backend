@@ -16,7 +16,7 @@ http://localhost:8000/docs
 http://localhost:8000/redoc
 ```
 
-### Uvicorn commands
+### Start Service
 ```
 uvicorn main:app --reload
 ```

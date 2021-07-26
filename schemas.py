@@ -98,6 +98,7 @@ class AppointmentCreate(AppointmentBase):
     scheduled_to: datetime.datetime
     user_id: int
     comments: str
+    appointment_status_id: int
 
 class Appointment(AppointmentBase):
 

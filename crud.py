@@ -93,7 +93,7 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
         scheduled_from=appointment.scheduled_from,
         scheduled_to=appointment.scheduled_to,
         user_id=appointment.user_id,
-        appoint_status_id=appointment.appoint_status_id,
+        appointment_status_id=appointment.appointment_status_id,
         comments=appointment.comments
     )
     db.add(db_appointment)
