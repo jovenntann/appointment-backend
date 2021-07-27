@@ -24,7 +24,7 @@
             "last_name": "Chua",
             "profile_pic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjoxagWnBzGTwJCLM5Nrs_j6WywlZjPKouDIEEDtk7WZgke9HJdIPYXON0pacdSUGY3co&usqp=CAU",
             "user_type_id": 2,
-            "status_id": 1
+            "status_id": 2
         },
         {
             "email":"jannelsamson@gmail.com",
@@ -33,7 +33,7 @@
             "last_name": "Samson",
             "profile_pic": "https://demo.cherrytheme.com/gems/wp-content/uploads/2018/11/our-team-04.jpg",
             "user_type_id": 2,
-            "status_id": 1
+            "status_id": 2
         },
         {
             "email":"krizyoung@gmail.com",
@@ -102,7 +102,7 @@
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
             "user_id": 2,
-            "appointment_status_id": 3,
+            "appointment_status_id": 2,
             "comments": "Not Feeling well"
         },
         {
@@ -111,7 +111,7 @@
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
             "user_id": 2,
-            "appointment_status_id": 2,
+            "appointment_status_id": 3,
             "comments": "Sick and tired"
         },
         {
@@ -119,9 +119,36 @@
             "patient_last_name": "Tan",
             "scheduled_from": "2021-07-24T19:03:37.221Z",
             "scheduled_to": "2021-07-24T19:03:37.221Z",
-            "user_id": null,
+            "user_id": 2,
+            "appointment_status_id": 3,
+            "comments": "Coughing"
+        },
+        {
+            "patient_first_name": "Jojo",
+            "patient_last_name": "Bonie",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": 2,
             "appointment_status_id": 1,
             "comments": "Coughing"
+        },
+        {
+            "patient_first_name": "Marco",
+            "patient_last_name": "Mallari",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": 2,
+            "appointment_status_id": 1,
+            "comments": "Sneezing"
+        },
+        {
+            "patient_first_name": "Bong",
+            "patient_last_name": "Nulud",
+            "scheduled_from": "2021-07-24T19:03:37.221Z",
+            "scheduled_to": "2021-07-24T19:03:37.221Z",
+            "user_id": 3,
+            "appointment_status_id": 2,
+            "comments": "Not Feeling well"
         }
     ]
   }

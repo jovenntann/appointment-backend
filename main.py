@@ -62,10 +62,13 @@ def generate_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session
     if db_user:
         payload = {
             "email": db_user.email,
-            "user_type_id": db_user.user_type_id
+            "user_type_id": db_user.user_type_id,
+            "first_name": db_user.first_name,
+            "last_name": db_user.last_name,
+            "profile_pic": db_user.profile_pic
         }
         token = jwt.encode({"data":payload}, JWT_SECRET)
-        return {'access_token' : token, 'token_type' : 'bearer', 'user_type_id':db_user.user_type_id}
+        return {'access_token' : token, 'token_type' : 'bearer', 'user_type_id':db_user.user_type_id, 'first_name': db_user.first_name, 'last_name': db_user.last_name,'profile_pic': db_user.profile_pic}
     else:
         raise HTTPException (
             status_code=status.HTTP_401_UNAUTHORIZED, 
@@ -77,6 +80,9 @@ def get_current_user(token: str = Depends(oauth2_scheme),db: Session = Depends(g
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
         email = payload['data']['email']
+        first_name = payload['data']['first_name']
+        last_name = payload['data']['last_name']
+        profile_pic = payload['data']['profile_pic']
         user_type_id = payload['data']['user_type_id']
         db_user = crud.get_user_by_email(db, email=email)
     except:
@@ -88,7 +94,7 @@ def get_current_user(token: str = Depends(oauth2_scheme),db: Session = Depends(g
 
 
 # =====================================================================================================================
-# Administration
+# SCHEDULER
 # =====================================================================================================================
 
 # Status
@@ -173,7 +179,22 @@ def create_appointment(appointment: schemas.AppointmentCreate, db: Session = Dep
 
 @app.get("/appointments/")
 def read_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    print(currentUser)
     appointments = crud.get_appointments(db)
+    return appointments
+
+
+# =====================================================================================================================
+# DOCTOR
+# =====================================================================================================================
+@app.get("/my-appointments/")
+def read_my_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointments = crud.get_my_appointments(db,currentUser.id)
+    return appointments
+
+@app.get("/my-appointments/pending")
+def read_my_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointments = crud.get_my_appointments_pending(db,currentUser.id)
     return appointments
 
 # =====================================================================================================================

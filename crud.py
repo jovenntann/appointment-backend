@@ -102,6 +102,7 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
 
     return db_appointment
 
+# Scheduler: Appointments
 def get_appointments(db: Session):
     # Custom Format Query Result
     queryResult = db.query(models.Appointment,models.AppointmentStatus).join(models.AppointmentStatus).all()
@@ -120,6 +121,48 @@ def get_appointments(db: Session):
             formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus})
 
     return formattedDict
+
+# Doctor: Appointments
+def get_my_appointments(db: Session,currentUserId: int):
+    # Custom Format Query Result
+    queryResult = db.query(models.Appointment,models.AppointmentStatus).join(models.AppointmentStatus).filter(models.Appointment.user_id == currentUserId).all()
+    formattedDict = []
+    for i in queryResult:
+        if (i.Appointment.user_id):
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            # Get User Info # Remove Password column
+            userQueryResult = db.query(models.User).options(defer('password')).filter(models.User.id == i.Appointment.user_id).first()
+            user = userQueryResult.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus,"user":user})
+        else:
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus})
+
+    return formattedDict
+
+# Doctor: Appointments: Pending
+def get_my_appointments_pending(db: Session,currentUserId: int):
+    # Custom Format Query Result
+    queryResult = db.query(models.Appointment,models.AppointmentStatus).join(models.AppointmentStatus).filter(models.Appointment.user_id == currentUserId,models.Appointment.appointment_status_id == 1).all()
+    formattedDict = []
+    for i in queryResult:
+        if (i.Appointment.user_id):
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            # Get User Info # Remove Password column
+            userQueryResult = db.query(models.User).options(defer('password')).filter(models.User.id == i.Appointment.user_id).first()
+            user = userQueryResult.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus,"user":user})
+        else:
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus})
+
+    return formattedDict
+
+
 
 # CRUD: Items
 
