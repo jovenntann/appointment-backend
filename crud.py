@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import undefer
 import models, schemas
+import datetime
 
 # CRUD: Authentication
 
@@ -103,9 +104,31 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     return db_appointment
 
 # Scheduler: Appointments
+
 def get_appointments(db: Session):
     # Custom Format Query Result
     queryResult = db.query(models.Appointment,models.AppointmentStatus).join(models.AppointmentStatus).all()
+    formattedDict = []
+    for i in queryResult:
+        if (i.Appointment.user_id):
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            # Get User Info # Remove Password column
+            userQueryResult = db.query(models.User).options(defer('password')).filter(models.User.id == i.Appointment.user_id).first()
+            user = userQueryResult.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus,"user":user})
+        else:
+            appointment = i.Appointment.__dict__
+            appointmentStatus = i.AppointmentStatus.__dict__
+            formattedDict.append({"appointment":appointment,"appointment_status":appointmentStatus})
+
+    return formattedDict
+
+def filter_appointments(db:Session,startDate,endDate):
+    # Custom Format Query Result
+    endDate = datetime.datetime.strptime(endDate, "%Y-%m-%d")
+    endDate = endDate + datetime.timedelta(days=1)
+    queryResult = db.query(models.Appointment,models.AppointmentStatus).filter(models.Appointment.scheduled_from>=startDate).filter(models.Appointment.scheduled_from<=endDate).join(models.AppointmentStatus).all()
     formattedDict = []
     for i in queryResult:
         if (i.Appointment.user_id):

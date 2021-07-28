@@ -179,8 +179,12 @@ def create_appointment(appointment: schemas.AppointmentCreate, db: Session = Dep
 
 @app.get("/appointments/")
 def read_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
-    print(currentUser)
     appointments = crud.get_appointments(db)
+    return appointments
+
+@app.get("/appointments/filter/")
+def filter_appointments(startDate: str, endDate: str,db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointments = crud.filter_appointments(db,startDate,endDate)
     return appointments
 
 @app.delete("/appointment/{appointment_id}")
