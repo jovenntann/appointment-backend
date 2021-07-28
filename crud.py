@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import undefer
+from sqlalchemy import func
 import models, schemas
 import datetime
 
@@ -236,12 +237,35 @@ def get_appointment(db: Session,currentUserId: int,appointment_id: int):
 # Doctor Accept Appointment
 def update_appointment_status(db: Session,currentUserId: int,appointment_id: int,appointment):
 
+    # Check Current Date of the appointment
     db_appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
-    db_appointment.user_id = currentUserId
-    db_appointment.appointment_status_id = appointment.appointment_status_id
-    db.commit()
-    db.refresh(db_appointment)
-    return db_appointment
+
+    # Check if Doctor already accepted 3 appointments on that day
+    db_appointments = db.query(models.Appointment,models.User).join(models.User).filter(
+        models.User.id == currentUserId,
+        func.DATE(models.Appointment.scheduled_from) == db_appointment.scheduled_from.date(),
+        models.Appointment.appointment_status_id == 3).all()
+
+    if len(db_appointments) > 2 and appointment.appointment_status_id == 3:
+        return {"message":"limit"}
+    else:
+        # Update Appointment
+        db_appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
+        db_appointment.user_id = currentUserId
+        db_appointment.appointment_status_id = appointment.appointment_status_id
+        db.commit()
+        db.refresh(db_appointment)
+        return db_appointment
+
+def get_date_availability(db: Session,selectedDate: str):
+    selectedDate = datetime.datetime.strptime(selectedDate, "%Y-%m-%d")
+    db_appointments = db.query(models.Appointment).filter(
+        func.DATE(models.Appointment.scheduled_from) == selectedDate.date(),
+        models.Appointment.appointment_status_id == 3).all()
+    if len(db_appointments) > 4:
+        return False
+    else:
+        return True
 
 def update_appointment(db: Session,currentUserId: int,appointment_id: int,appointment):
 

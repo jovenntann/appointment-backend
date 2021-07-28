@@ -205,6 +205,11 @@ def update_appointment_status(appointment: schemas.AppointmentUpdate,appointment
     appointment = crud.update_appointment(db,currentUser.id,appointment_id,appointment)
     return appointment
 
+@app.get("/appointment/date/availability")
+def get_doctors(selectedDate: str,db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    isAvailable = crud.get_date_availability(db,selectedDate)
+    return isAvailable
+
 # =====================================================================================================================
 # DOCTOR
 # =====================================================================================================================
