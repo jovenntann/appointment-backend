@@ -188,6 +188,10 @@ def read_appointment(appointment_id:int, db: Session = Depends(get_db), currentU
     appointment = crud.delete_appointment(db,appointment_id)
     return appointment
 
+@app.put("/appointment/{appointment_id}")
+def update_appointment_status(appointment: schemas.AppointmentUpdate,appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment = crud.update_appointment(db,currentUser.id,appointment_id,appointment)
+    return appointment
 
 # =====================================================================================================================
 # DOCTOR
@@ -207,9 +211,9 @@ def read_appointment(appointment_id:int, db: Session = Depends(get_db), currentU
     appointment = crud.get_appointment(db,currentUser.id,appointment_id)
     return appointment
 
-@app.put("/appointment/{appointment_id}")
-def update_appointment(appointment: schemas.AppointmentUpdate,appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
-    appointment = crud.update_appointment(db,currentUser.id,appointment_id,appointment)
+@app.put("/appointment/status/{appointment_id}")
+def update_appointment_status(appointment: schemas.AppointmentUpdateStatus,appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment = crud.update_appointment_status(db,currentUser.id,appointment_id,appointment)
     return appointment
 
 # =====================================================================================================================

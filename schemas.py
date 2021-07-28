@@ -115,9 +115,19 @@ class Appointment(AppointmentBase):
     class Config:
         orm_mode = True
 
-class AppointmentUpdate(AppointmentBase):
+class AppointmentUpdateStatus(AppointmentBase):
 
     appointment_status_id: int
+
+class AppointmentUpdate(AppointmentBase):
+
+    patient_first_name: str
+    patient_last_name: str
+    scheduled_from: datetime.datetime
+    scheduled_to: datetime.datetime
+    user_id: int
+    appointment_status_id: int
+    comments: str
 
 # ====================================================================================================
 # USER SCHEMA: Users | All Users 

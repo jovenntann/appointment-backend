@@ -171,13 +171,34 @@ def get_appointment(db: Session,currentUserId: int,appointment_id: int):
     queryResult = db.query(models.Appointment,models.User,models.AppointmentStatus).join(models.AppointmentStatus,models.User).filter(models.Appointment.id == appointment_id).first()
     return queryResult
     
-def update_appointment(db: Session,currentUserId: int,appointment_id: int,appointment):
+# Doctor Accept Appointment
+def update_appointment_status(db: Session,currentUserId: int,appointment_id: int,appointment):
+
     db_appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
     db_appointment.user_id = currentUserId
     db_appointment.appointment_status_id = appointment.appointment_status_id
     db.commit()
     db.refresh(db_appointment)
     return db_appointment
+
+def update_appointment(db: Session,currentUserId: int,appointment_id: int,appointment):
+
+    db_appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
+    db_appointment.patient_first_name=appointment.patient_first_name
+    db_appointment.patient_last_name=appointment.patient_last_name
+    db_appointment.scheduled_from=appointment.scheduled_from
+    db_appointment.scheduled_to=appointment.scheduled_to
+    db_appointment.user_id=appointment.user_id
+    db_appointment.appointment_status_id=appointment.appointment_status_id
+    db_appointment.comments=appointment.comments
+
+    db.commit()
+    db.refresh(db_appointment)
+    return db_appointment
+
+
+
+
 
 # CRUD: Items
 
