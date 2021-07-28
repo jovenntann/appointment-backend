@@ -65,9 +65,12 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def get_users_by_user_type(db: Session):
+def get_users_by_user_type(db: Session,status):
 
-    return db.query(models.User).filter(models.User.user_type_id == 2).all()
+    if status == "all":
+        return db.query(models.User).filter(models.User.user_type_id == 2).all()
+    elif status == "available":
+        return db.query(models.User).filter(models.User.user_type_id == 2,models.User.status_id == 1).all()
 
 def create_user(db: Session, user: schemas.UserCreate):
     

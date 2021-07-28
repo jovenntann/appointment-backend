@@ -140,10 +140,9 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), c
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
-
-@app.get("/users/{user_id}", response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
-    db_user = crud.get_user(db, user_id=user_id)
+@app.get("/me/", response_model=schemas.User)
+def read_user(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    db_user = crud.get_user(db, user_id=currentUser.id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
@@ -164,8 +163,8 @@ def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session = D
 # Get Doctors
 
 @app.get("/doctors/", response_model=List[schemas.User])
-def get_doctors(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
-    users = crud.get_users_by_user_type(db)
+def get_doctors(status: str,db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    users = crud.get_users_by_user_type(db,status)
     return users
 
 # Appointment Status
