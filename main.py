@@ -167,6 +167,11 @@ def get_doctors(status: str,db: Session = Depends(get_db), currentUser: object =
     users = crud.get_users_by_user_type(db,status)
     return users
 
+@app.get("/doctors/availability")
+def get_doctors(startDate: str,endDate: str,db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    users = crud.get_users_by_user_availability(db,startDate,endDate)
+    return users
+
 # Appointment Status
 
 @app.get("/appointment/status/", response_model=List[schemas.AppointmentStatus])

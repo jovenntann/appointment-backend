@@ -72,6 +72,32 @@ def get_users_by_user_type(db: Session,status):
     elif status == "available":
         return db.query(models.User).filter(models.User.user_type_id == 2,models.User.status_id == 1).all()
 
+def get_users_by_user_availability(db: Session,startDate,endDate):
+
+    # The User Type should be equal to 2 as a Doctor
+    # And it doesn't have an appointment matches the selected Start and End Date and Time
+    convertedStartDate = datetime.datetime.strptime(startDate, "%Y-%m-%d %H:%M:%S")
+    convertedStartDate = convertedStartDate + datetime.timedelta(minutes=1)
+    convertedEndDate = datetime.datetime.strptime(endDate, "%Y-%m-%d %H:%M:%S")
+
+    removeThisDoctors = []
+
+    db_appointment_startDate = db.query(models.Appointment).filter(models.Appointment.scheduled_from.between(convertedStartDate,convertedEndDate)).all()
+    db_appointment_endDate = db.query(models.Appointment).filter(models.Appointment.scheduled_to.between(convertedStartDate,convertedEndDate)).all()
+
+    for appointment in db_appointment_startDate:
+        removeThisDoctors.append(appointment.user_id)
+
+    print(removeThisDoctors)
+
+    for appointment in db_appointment_endDate:
+        removeThisDoctors.append(appointment.user_id)
+
+    print(removeThisDoctors)
+
+
+    return db.query(models.User).filter(models.User.user_type_id == 2,models.User.status_id == 1,models.User.id.not_in(removeThisDoctors)).all()
+
 def create_user(db: Session, user: schemas.UserCreate):
     
     db_user = models.User(email=user.email, password=user.password, first_name=user.first_name, last_name=user.last_name, profile_pic=user.profile_pic, user_type_id=user.user_type_id, status_id=user.status_id)
@@ -99,10 +125,12 @@ def get_appointment_status(db: Session):
 
 def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     
+    scheduleStartDate = appointment.scheduled_from + datetime.timedelta(minutes=1)
+
     db_appointment = models.Appointment(
         patient_first_name=appointment.patient_first_name,
         patient_last_name=appointment.patient_last_name,
-        scheduled_from=appointment.scheduled_from,
+        scheduled_from=scheduleStartDate,
         scheduled_to=appointment.scheduled_to,
         user_id=appointment.user_id,
         appointment_status_id=appointment.appointment_status_id,
