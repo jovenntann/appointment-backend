@@ -148,6 +148,10 @@ def read_user(user_id: int, db: Session = Depends(get_db), currentUser: object =
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.put("/user/status/")
+def update_user_status(user_id:int, status_id:int,db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    db_user = crud.update_user_status(db,user_id,status_id)
+    return db_user
 
 @app.post("/users/{user_id}/items/", response_model=schemas.Item)
 def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):

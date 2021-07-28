@@ -78,6 +78,14 @@ def create_user(db: Session, user: schemas.UserCreate):
 
     return db_user
 
+def update_user_status(db: Session,user_id: int,status_id: int):
+
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    db_user.status_id = status_id
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
 # CRUD: Appointment Status
 
 def get_appointment_status(db: Session):
