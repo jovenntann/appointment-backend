@@ -162,7 +162,17 @@ def get_my_appointments_pending(db: Session,currentUserId: int):
 
     return formattedDict
 
-
+def get_appointment(db: Session,currentUserId: int,appointment_id: int):
+    queryResult = db.query(models.Appointment,models.User,models.AppointmentStatus).join(models.AppointmentStatus,models.User).filter(models.Appointment.id == appointment_id).first()
+    return queryResult
+    
+def update_appointment(db: Session,currentUserId: int,appointment_id: int,appointment):
+    db_appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
+    db_appointment.user_id = currentUserId
+    db_appointment.appointment_status_id = appointment.appointment_status_id
+    db.commit()
+    db.refresh(db_appointment)
+    return db_appointment
 
 # CRUD: Items
 

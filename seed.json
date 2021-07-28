@@ -24,7 +24,7 @@
             "last_name": "Chua",
             "profile_pic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjoxagWnBzGTwJCLM5Nrs_j6WywlZjPKouDIEEDtk7WZgke9HJdIPYXON0pacdSUGY3co&usqp=CAU",
             "user_type_id": 2,
-            "status_id": 2
+            "status_id": 1
         },
         {
             "email":"jannelsamson@gmail.com",
@@ -33,7 +33,7 @@
             "last_name": "Samson",
             "profile_pic": "https://demo.cherrytheme.com/gems/wp-content/uploads/2018/11/our-team-04.jpg",
             "user_type_id": 2,
-            "status_id": 2
+            "status_id": 1
         },
         {
             "email":"krizyoung@gmail.com",

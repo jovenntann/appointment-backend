@@ -157,7 +157,7 @@ def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session = D
 # Scheduler API
 # =====================================================================================================================
 
-# Doctors
+# Get Doctors
 
 @app.get("/doctors/", response_model=List[schemas.User])
 def get_doctors(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
@@ -196,6 +196,16 @@ def read_my_appointments(db: Session = Depends(get_db), currentUser: object = De
 def read_my_appointments(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
     appointments = crud.get_my_appointments_pending(db,currentUser.id)
     return appointments
+
+@app.get("/appointment/{appointment_id}")
+def read_appointment(appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment = crud.get_appointment(db,currentUser.id,appointment_id)
+    return appointment
+
+@app.put("/appointment/{appointment_id}")
+def update_appointment(appointment: schemas.AppointmentUpdate,appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment = crud.update_appointment(db,currentUser.id,appointment_id,appointment)
+    return appointment
 
 # =====================================================================================================================
 # REFERENCES API
