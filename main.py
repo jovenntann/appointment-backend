@@ -183,6 +183,11 @@ def read_appointments(db: Session = Depends(get_db), currentUser: object = Depen
     appointments = crud.get_appointments(db)
     return appointments
 
+@app.delete("/appointment/{appointment_id}")
+def read_appointment(appointment_id:int, db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointment = crud.delete_appointment(db,appointment_id)
+    return appointment
+
 
 # =====================================================================================================================
 # DOCTOR

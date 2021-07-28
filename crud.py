@@ -122,6 +122,11 @@ def get_appointments(db: Session):
 
     return formattedDict
 
+def delete_appointment(db: Session,appointment_id: int):
+    db.query(models.Appointment).filter(models.Appointment.id == appointment_id).delete()
+    db.commit()
+    return {"message":"deleted"}
+
 # Doctor: Appointments
 def get_my_appointments(db: Session,currentUserId: int):
     # Custom Format Query Result

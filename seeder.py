@@ -1,6 +1,7 @@
 import models
 import json
 from sqlalchemy.sql import func
+from dateutil import parser
 
 def seed(db):
 
@@ -48,8 +49,8 @@ def seed(db):
         db_object = models.Appointment(
             patient_first_name=appointment['patient_first_name'],
             patient_last_name=appointment['patient_last_name'],
-            scheduled_from=func.now(),
-            scheduled_to=func.now(),
+            scheduled_from=parser.parse(appointment['scheduled_from']),
+            scheduled_to=parser.parse(appointment['scheduled_to']),
             user_id=appointment['user_id'],
             appointment_status_id=appointment['appointment_status_id'],
             comments=appointment['comments']
