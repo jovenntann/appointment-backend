@@ -5,6 +5,26 @@ from sqlalchemy import func
 import models, schemas
 import datetime
 
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+def send_mail(emailAddress):
+
+    message = Mail(
+        from_email='info@tappy.ph',
+        to_emails=emailAddress,
+        subject='New Appointment!')
+    message.template_id = 'd-f3311f80407f4ecc80fd80650658bccb'
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+
 # CRUD: Authentication
 
 def authenticate_user(db: Session,email: str, password: str):
@@ -141,6 +161,10 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     db.commit()
     db.refresh(db_appointment)
 
+    db_user = db.query(models.User).filter(models.User.id==appointment.user_id).first()
+    print(db_user.email)
+    send_mail(db_user.email)
+    
     return db_appointment
 
 # Scheduler: Appointments

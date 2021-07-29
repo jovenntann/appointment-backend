@@ -18,6 +18,7 @@ http://localhost:8000/redoc
 
 ### Start Service
 ```
+source ./sendgrid.env
 uvicorn main:app --reload
 ```
 
@@ -30,6 +31,6 @@ password: pass12345
 
 Doctor
 
-email: mikechua@gmail.com  
+email: joven.shared.drive@gmail.com
 password: pass12345
 
