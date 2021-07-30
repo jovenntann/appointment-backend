@@ -210,6 +210,11 @@ def get_doctors(selectedDate: str,db: Session = Depends(get_db), currentUser: ob
     isAvailable = crud.get_date_availability(db,selectedDate)
     return isAvailable
 
+@app.get("/appointment/stats")
+def read_appointment_stats(db: Session = Depends(get_db), currentUser: object = Depends(get_current_user)):
+    appointments = crud.read_appointment_stats(db)
+    return appointments
+
 # =====================================================================================================================
 # DOCTOR
 # =====================================================================================================================

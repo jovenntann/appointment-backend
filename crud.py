@@ -214,6 +214,19 @@ def delete_appointment(db: Session,appointment_id: int):
     db.commit()
     return {"message":"deleted"}
 
+
+def read_appointment_stats(db: Session):
+    # Custom Format Query Result
+    pendingCount = db.query(models.Appointment).filter(models.Appointment.appointment_status_id==1).count() 
+    declinedCount = db.query(models.Appointment).filter(models.Appointment.appointment_status_id==2).count() 
+    approvedCount = db.query(models.Appointment).filter(models.Appointment.appointment_status_id==3).count() 
+    stats = {
+        'pending_count':pendingCount,
+        'declined_count':declinedCount,
+        'approved_count':approvedCount
+    }
+    return stats
+    
 # Doctor: Appointments
 def get_my_appointments(db: Session,currentUserId: int):
     # Custom Format Query Result
