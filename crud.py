@@ -298,7 +298,7 @@ def get_date_availability(db: Session,selectedDate: str):
     selectedDate = datetime.datetime.strptime(selectedDate, "%Y-%m-%d")
     db_appointments = db.query(models.Appointment).filter(
         func.DATE(models.Appointment.scheduled_from) == selectedDate.date(),
-        models.Appointment.appointment_status_id == 3).all()
+        models.Appointment.appointment_status_id.in_([1,3])).all()
     if len(db_appointments) > 4:
         return False
     else:
